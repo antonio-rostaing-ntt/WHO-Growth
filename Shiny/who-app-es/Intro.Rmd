@@ -1,0 +1,12 @@
+---
+title: "Patrones de crecimiento de la OMS"
+author: "arostaing@outlook.com"
+---
+
+Entre 1997 y 2003, la OMS llevó a cabo un estudio multicéntrico sobre el patrón de crecimiento (EMPC) con el fin de determinar un nuevo conjunto de curvas destinadas a evaluar el crecimiento y el desarrollo motor de los lactantes y niños de 0 a 5 años.
+
+En el marco del EMPC se obtuvieron datos básicos sobre el crecimiento e información conexa de unos 8 500 niños de muy distintos orígenes étnicos y entornos culturales (Brasil, Estados Unidos de América, Ghana, India, Noruega y Omán).
+
+Las nuevas curvas de crecimiento proporcionan una referencia internacional única que corresponde a la mejor descripción del crecimiento fisiológico de todos los niños menores de cinco años. También establecen la alimentación con leche materna como modelo normativo de crecimiento y desarrollo.
+
+Más información en <http://www.who.int/childgrowth/mgrs/es/>
