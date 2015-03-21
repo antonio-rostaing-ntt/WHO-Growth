@@ -15,6 +15,7 @@ More info in <http://www.who.int/childgrowth/mgrs/en/>
 ## R Application
 The application calculates weight and height for a child, given the gender and birthday and it displays the percentile information in several plots. In addition, given the current child's weight and height, the associated percentile is calculated and included in the plots.
 
-
 English version: <https://arostaing.shinyapps.io/who-app-en/>   
 Spanish version: <https://arostaing.shinyapps.io/who-app-es/>
+
+Slidify: <http://arostaing.github.io/WHO-Growth>
