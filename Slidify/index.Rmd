@@ -1,0 +1,134 @@
+---
+title       : The WHO Child Growth Standards
+subtitle    : R application
+author      : arostaing@outlook.com
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]     # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## Introduction
+
+The WHO Multicentre Growth Reference Study (MGRS) was undertaken between 1997 and 2003 to generate new growth curves for assessing the growth and development of infants and young children around the world.
+
+The MGRS collected primary growth data and related information from approximately 8500 children from widely different ethnic backgrounds and cultural settings (Brazil, Ghana, India, Norway, Oman and the USA).
+
+The new growth curves are expected to provide a single international standard that represents the best description of physiological growth for all children from birth to five years of age and to establish the breastfed infant as the normative model for growth and development.
+
+More info in <http://www.who.int/childgrowth/mgrs/en/>
+
+--- .class #id 
+
+## Data Source
+
+The survey data are available in the next link.   
+<http://www.who.int/entity/childgrowth/software/igrowup_R.zip>
+
+I'll use the next files:   
+
+- weianthro.txt: Weight data
+- lenanthro.txt: Lenght data
+
+The file's data format is LMS. Lambda-Mu-Sigma is a popular method for constructing centile curves.
+When constructed for healthy children, these are used as reference for evaluating growth of children. Main feature of these plots is that percentiles look like a smooth curve over age.
+The LMS data are associated with child's gender and age. 
+
+Reference: [Demystifying LMS and BCPE Methods of Centile Estimation for Growth and Other Health Parameters] (http://www.who.int/entity/childgrowth/software/igrowup_R.zip)
+
+--- .class #id 
+
+## Data processing
+
+Knowing the sex and age of a baby, we can obtain the following information:
+
+1. Given the weight, we know what percentile corresponds to that weight.  
+(Given a *y* value, get the associated percentile)  
+$$Z_{LMS} = \frac{1}{\sigma_L \lambda} \left[ \left( \frac{y}{\mu} \right) ^\lambda - 1 \right]$$ 
+   
+2. We also know the weight associated with a given percentile.  
+(Given a percentil, get the associated *y* value)  
+$$p^{th} percentile = \mu \left( 1 + \lambda \sigma_L Z_p  \right)$$
+
+--- .class #id 
+
+## Results
+
+The following chart shows the evolution of various percentils (p5, p20, p50, p80, p95)
+
+```{r echo=FALSE, eval=FALSE}
+# Multiple plot function
+#
+# ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
+# - cols:   Number of columns in layout
+# - layout: A matrix specifying the layout. If present, 'cols' is ignored.
+#
+# If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
+# then plot 1 will go in the upper left, 2 will go in the upper right, and
+# 3 will go all the way across the bottom.
+#
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  library(grid)
+
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+
+  numPlots = length(plots)
+
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                    ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+
+ if (numPlots==1) {
+    print(plots[[1]])
+
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+```
+
+```{r echo=FALSE}
+setwd("~/Documents/Github/WHO-Growth/Shiny/who-app-en")
+source("helpers.R")
+require ("ggplot2")
+require("reshape2")
+library(grid)
+
+# boys <- melt(weianthro[weianthro$sex == 1,], id = "age", measure = c("p5", "p20", "p50", "p80", "p95"))
+# girls <- melt(weianthro[weianthro$sex == 2,], id = "age", measure = c("p5", "p20", "p50", "p80", "p95"))
+# gboys <- qplot(age, value, data = boys, geom = "line", colour = variable) + ggtitle("Male (Kg / day)")
+# ggirls <- qplot(age, value, data = girls, geom = "line", colour = variable) + ggtitle("Female (Kg / day)")
+# multiplot(gboys, ggirls, cols=2)
+
+all <- melt(weianthro, id = c("age", "sex"), measure = c("p5", "p20", "p50", "p80", "p95"))
+all$sex [all$sex==1] <- "Male"
+all$sex [all$sex==2] <- "Fenale"
+names(all) <- c('age', "sex", "percentil", "value") 
+qplot(age, value, data = all, geom = "line", colour = percentil,
+             facets= sex ~ .,
+             main="Weight percentiles",
+             xlab="Age (days)",
+             ylab="Weight (kg)")
+
+```
+
