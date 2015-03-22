@@ -43,18 +43,21 @@ Reference: [Demystifying LMS and BCPE Methods of Centile Estimation for Growth a
 
 ## Data processing
 
-Given a *y* value, get the associated percentile:
+Knowing the sex and age of a baby, we can obtain the following information:
 
-$$Z_{LMS} = \frac{1}{\sigma_L \lambda} \left[ \left( \frac{y}{\mu} \right) ^\lambda - 1 \right]$$ for $$y, \mu, \sigma_L, and \lambda \neq 0$$
+1. Given the weight, we know what percentile corresponds to that weight.  
+(Given a *y* value, get the associated percentile)  
+$$Z_{LMS} = \frac{1}{\sigma_L \lambda} \left[ \left( \frac{y}{\mu} \right) ^\lambda - 1 \right]$$ 
    
-   
-Given a percentil, get the associated *y* value:
-
+2. We also know the weight associated with a given percentile.  
+(Given a percentil, get the associated *y* value)  
 $$p^{th} percentile = \mu \left( 1 + \lambda \sigma_L Z_p  \right)$$
 
 --- .class #id 
 
-## Results sample
+## Results
+
+The following chart shows the evolution of various percentils (p5, p20, p50, p80, p95)
 
 
 

@@ -88,13 +88,16 @@ The LMS data are associated with child&#39;s gender and age. </p>
     <h2>Data processing</h2>
   </hgroup>
   <article data-timings="">
-    <p>Given a <em>y</em> value, get the associated percentile:</p>
+    <p>Knowing the sex and age of a baby, we can obtain the following information:</p>
 
-<p>\[Z_{LMS} = \frac{1}{\sigma_L \lambda} \left[ \left( \frac{y}{\mu} \right) ^\lambda - 1 \right]\] for \[y, \mu, \sigma_L, and \lambda \neq 0\]</p>
-
-<p>Given a percentil, get the associated <em>y</em> value:</p>
-
-<p>\[p^{th} percentile = \mu \left( 1 + \lambda \sigma_L Z_p  \right)\]</p>
+<ol>
+<li><p>Given the weight, we know what percentile corresponds to that weight.<br>
+(Given a <em>y</em> value, get the associated percentile)<br>
+\[Z_{LMS} = \frac{1}{\sigma_L \lambda} \left[ \left( \frac{y}{\mu} \right) ^\lambda - 1 \right]\] </p></li>
+<li><p>We also know the weight associated with a given percentile.<br>
+(Given a percentil, get the associated <em>y</em> value)<br>
+\[p^{th} percentile = \mu \left( 1 + \lambda \sigma_L Z_p  \right)\]</p></li>
+</ol>
 
   </article>
   <!-- Presenter Notes -->
@@ -102,10 +105,12 @@ The LMS data are associated with child&#39;s gender and age. </p>
 
 <slide class="class" id="id" style="background:;">
   <hgroup>
-    <h2>Results sample</h2>
+    <h2>Results</h2>
   </hgroup>
   <article data-timings="">
-    <p><img src="assets/fig/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"> </p>
+    <p>The following chart shows the evolution of various percentils (p5, p20, p50, p80, p95)</p>
+
+<p><img src="assets/fig/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -135,7 +140,7 @@ The LMS data are associated with child&#39;s gender and age. </p>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=4 title='Results sample'>
+        data-slide=4 title='Results'>
          4
       </a>
     </li>

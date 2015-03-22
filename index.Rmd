@@ -43,20 +43,23 @@ Reference: [Demystifying LMS and BCPE Methods of Centile Estimation for Growth a
 
 ## Data processing
 
-Given a *y* value, get the associated percentile:
+Knowing the sex and age of a baby, we can obtain the following information:
 
-$$Z_{LMS} = \frac{1}{\sigma_L \lambda} \left[ \left( \frac{y}{\mu} \right) ^\lambda - 1 \right]$$ for $$y, \mu, \sigma_L, and \lambda \neq 0$$
+1. Given the weight, we know what percentile corresponds to that weight.  
+(Given a *y* value, get the associated percentile)  
+$$Z_{LMS} = \frac{1}{\sigma_L \lambda} \left[ \left( \frac{y}{\mu} \right) ^\lambda - 1 \right]$$ 
    
-   
-Given a percentil, get the associated *y* value:
-
+2. We also know the weight associated with a given percentile.  
+(Given a percentil, get the associated *y* value)  
 $$p^{th} percentile = \mu \left( 1 + \lambda \sigma_L Z_p  \right)$$
 
 --- .class #id 
 
-## Results sample
+## Results
 
-```{r echo=FALSE}
+The following chart shows the evolution of various percentils (p5, p20, p50, p80, p95)
+
+```{r echo=FALSE, eval=FALSE}
 # Multiple plot function
 #
 # ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
@@ -111,13 +114,21 @@ require ("ggplot2")
 require("reshape2")
 library(grid)
 
-boys <- melt(weianthro[weianthro$sex == 1,], id = "age", measure = c("p5", "p20", "p50", "p80", "p95"))
-girls <- melt(weianthro[weianthro$sex == 2,], id = "age", measure = c("p5", "p20", "p50", "p80", "p95"))
+# boys <- melt(weianthro[weianthro$sex == 1,], id = "age", measure = c("p5", "p20", "p50", "p80", "p95"))
+# girls <- melt(weianthro[weianthro$sex == 2,], id = "age", measure = c("p5", "p20", "p50", "p80", "p95"))
+# gboys <- qplot(age, value, data = boys, geom = "line", colour = variable) + ggtitle("Male (Kg / day)")
+# ggirls <- qplot(age, value, data = girls, geom = "line", colour = variable) + ggtitle("Female (Kg / day)")
+# multiplot(gboys, ggirls, cols=2)
 
-gboys <- qplot(age, value, data = boys, geom = "line", colour = variable) + ggtitle("Male (Kg / day)")
-ggirls <- qplot(age, value, data = girls, geom = "line", colour = variable) + ggtitle("Female (Kg / day)")
-#multiplot(gboys, ggirls, cols=2)
-gboys
+all <- melt(weianthro, id = c("age", "sex"), measure = c("p5", "p20", "p50", "p80", "p95"))
+all$sex [all$sex==1] <- "Male"
+all$sex [all$sex==2] <- "Fenale"
+names(all) <- c('age', "sex", "percentil", "value") 
+qplot(age, value, data = all, geom = "line", colour = percentil,
+             facets= sex ~ .,
+             main="Weight percentiles",
+             xlab="Age (days)",
+             ylab="Weight (kg)")
 
 ```
 
